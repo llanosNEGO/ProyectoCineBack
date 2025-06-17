@@ -3,27 +3,24 @@ package com.devDJ.cinerma;
 import java.time.LocalDateTime;
 import java.util.Arrays;
 
+import com.devDJ.cinerma.Entities.*;
+import com.devDJ.cinerma.Repository.*;
+import org.modelmapper.ModelMapper;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
-
-import com.devDJ.cinerma.Entities.Cinemas;
-import com.devDJ.cinerma.Entities.Cities;
-import com.devDJ.cinerma.Entities.Movie;
-import com.devDJ.cinerma.Entities.Rooms;
-import com.devDJ.cinerma.Entities.Schedule;
-import com.devDJ.cinerma.Repository.ICinemasRepository;
-import com.devDJ.cinerma.Repository.ICitiesRepository;
-import com.devDJ.cinerma.Repository.IMovieRepository;
-import com.devDJ.cinerma.Repository.IRoomsRepository;
-import com.devDJ.cinerma.Repository.IScheduleRepository;
 
 @SpringBootApplication
 public class CinermaApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(CinermaApplication.class, args);
+    }
+
+    @Bean
+    public ModelMapper modelMapper() {
+        return new ModelMapper();
     }
 
     @Bean
@@ -88,8 +85,24 @@ public class CinermaApplication {
 
             movieRepository.saveAll(Arrays.asList(movie1, movie2));
 
-
             System.out.println("Datos de prueba cargados exitosamente.");
+        };
+    }
+
+    @Bean
+    public CommandLineRunner loadDulceria(IDulceriaRepository dulceriaRepository) {
+        return args -> {
+            Dulceria combo1 = new Dulceria();
+            combo1.setTitle("COMBO DOS SALADO + 2M&M OL");
+            combo1.setDescription(Arrays.asList(
+                    "1 Canchita Gigante (Salada)",
+                    "2 Bebidas (32oz)"
+            ));
+            combo1.setCost(47.0);
+            combo1.setCategory("Promocional");
+            combo1.setUrlImage("https://cdn.apis.cineplanet.com.pe/CDN/media/entity/get/ItemGraphic/3033?allowPlaceHolder=true");
+
+            dulceriaRepository.save(combo1);
         };
     }
 

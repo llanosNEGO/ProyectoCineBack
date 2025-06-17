@@ -14,42 +14,42 @@ import com.devDJ.cinerma.Repository.ICinemasRepository;
 public class CinemaController {
 
     @Autowired
-    private ICinemasRepository cinemaRepository;
+    private ICinemasRepository cinemasRepository;
 
     @GetMapping
     public List<Cinemas> getAllCinemas() {
-        return cinemaRepository.findAll();
+        return cinemasRepository.findAll();
     }
 
     @GetMapping("/{id}")
     public Cinemas getCinemaById(@PathVariable Long id) {
-        return cinemaRepository.findById(id)
+        return cinemasRepository.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Cine no encontrado"));
     }
 
     @PostMapping
     public Cinemas createCinema(@RequestBody Cinemas cinema) {
-        return cinemaRepository.save(cinema);
+        return cinemasRepository.save(cinema);
     }
 
     @PutMapping("/{id}")
-    public Cinemas updateCinema(@PathVariable Long id, @RequestBody Cinemas updatedCinema) {
-        return cinemaRepository.findById(id)
+    public Cinemas updateCinema(@PathVariable Long id, @RequestBody Cinemas updatedCinemas) {
+        return cinemasRepository.findById(id)
                 .map(existingCinema -> {
-                    existingCinema.setName(updatedCinema.getName());
-                    existingCinema.setDescription(updatedCinema.getDescription());
-                    existingCinema.setAddress(updatedCinema.getAddress());
-                    existingCinema.setUrlImage(updatedCinema.getUrlImage());
-                    existingCinema.setHorarios(updatedCinema.getHorarios());
-                    existingCinema.setDisponible(updatedCinema.getDisponible());
-                    existingCinema.setCities(updatedCinema.getCities());
-                    return cinemaRepository.save(existingCinema);
+                    existingCinema.setName(updatedCinemas.getName());
+                    existingCinema.setDescription(updatedCinemas.getDescription());
+                    existingCinema.setAddress(updatedCinemas.getAddress());
+                    existingCinema.setUrlImage(updatedCinemas.getUrlImage());
+                    existingCinema.setHorarios(updatedCinemas.getHorarios());
+                    existingCinema.setDisponible(updatedCinemas.getDisponible());
+                    existingCinema.setCities(updatedCinemas.getCities());
+                    return cinemasRepository.save(existingCinema);
                 })
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Cine no encontrado"));
     }
 
     @DeleteMapping("/{id}")
     public void deleteCinema(@PathVariable Long id) {
-        cinemaRepository.deleteById(id);
+        cinemasRepository.deleteById(id);
     }
 }

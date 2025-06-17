@@ -1,27 +1,25 @@
 package com.devDJ.cinerma.Entities;
 
+import jakarta.persistence.*;
+import lombok.*;
 import java.util.List;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
 
-@AllArgsConstructor
-@NoArgsConstructor
+@Entity
 @Getter
 @Setter
-@Entity
+@NoArgsConstructor
+@AllArgsConstructor
 public class Dulceria {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long idDulceria;
-    private String nameCandyShop;
-    private List<String> combo;
-    private String price;
-    private String stock;
-    private String image;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    private String title;
+
+    @ElementCollection
+    private List<String> description; // Ej: ["1 Canchita Gigante", "2 Bebidas"]
+
+    private Double cost;
+    private String category;
+    private String urlImage;
 }

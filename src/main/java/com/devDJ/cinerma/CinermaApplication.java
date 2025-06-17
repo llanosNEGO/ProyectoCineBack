@@ -81,7 +81,7 @@ public class CinermaApplication {
             movie2.setUrlTrailer("https://youtu.be/whyT4WCy7ek");
             movie2.setIdioma(Arrays.asList("SUBTITULAR", "DOBLADA"));
             movie2.setStatus(Arrays.asList("Cartelera"));
-            movie2.setDisponible(Arrays.asList("REGULAR", "3D", "PRIME"));
+            movie2.setDisponible(Arrays.asList("REGULAR", "2D"));
 
             movieRepository.saveAll(Arrays.asList(movie1, movie2));
 

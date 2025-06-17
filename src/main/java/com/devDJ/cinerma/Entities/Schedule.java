@@ -3,7 +3,6 @@ package com.devDJ.cinerma.Entities;
 import java.time.LocalDateTime;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -24,31 +23,19 @@ import lombok.Setter;
 public class Schedule {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY) // Mejor usar IDENTITY que AUTO
     private Long idSchedule;
 
-    private LocalDateTime startTime; // inico
-    private LocalDateTime endTime; // fin
+    private LocalDateTime startTime;
+    private LocalDateTime endTime;
 
     @ManyToOne
     @JoinColumn(name = "room_id")
-    @JsonManagedReference
+    @JsonBackReference("room-schedule") // Referencia única para esta relación
     private Rooms room;
 
     @ManyToOne
     @JoinColumn(name = "movie_id")
-    @JsonManagedReference
+    @JsonBackReference("movie-schedule") // Referencia única para esta relación
     private Movie movie;
-
-    /*@ManyToOne
-    @JoinColumn(name = "room_id")
-    @JsonBackReference
-    private Rooms room;
-
-    @ManyToOne
-    @JoinColumn(name = "movie_id")
-    @JsonBackReference
-    private Movie movie;*/
-
-
 }

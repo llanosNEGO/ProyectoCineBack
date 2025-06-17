@@ -42,7 +42,7 @@ public class CinemaController {
                     existingCinema.setUrlImage(updatedCinemas.getUrlImage());
                     existingCinema.setHorarios(updatedCinemas.getHorarios());
                     existingCinema.setDisponible(updatedCinemas.getDisponible());
-                    existingCinema.setCities(updatedCinemas.getCities());
+                    existingCinema.setCity(updatedCinemas.getCity());
                     return cinemasRepository.save(existingCinema);
                 })
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Cine no encontrado"));

@@ -19,14 +19,14 @@ public class DulceriaService {
     @Autowired
     private ModelMapper modelMapper;
 
-    // Crear
+    
     public DulceriaResponseDTO createDulceria(DulceriaDTO dulceriaDTO) {
         Dulceria dulceria = modelMapper.map(dulceriaDTO, Dulceria.class);
         Dulceria savedDulceria = dulceriaRepository.save(dulceria);
         return modelMapper.map(savedDulceria, DulceriaResponseDTO.class);
     }
 
-    // Obtener todos
+
     public List<DulceriaResponseDTO> getAllDulcerias() {
         List<Dulceria> dulcerias = dulceriaRepository.findAll();
         return dulcerias.stream()
@@ -34,24 +34,24 @@ public class DulceriaService {
                 .collect(Collectors.toList());
     }
 
-    // Obtener por ID
+
     public DulceriaResponseDTO getDulceriaById(Long id) {
         Dulceria dulceria = dulceriaRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Producto no encontrado con ID: " + id));
         return modelMapper.map(dulceria, DulceriaResponseDTO.class);
     }
 
-    // Actualizar
+ 
     public DulceriaResponseDTO updateDulceria(Long id, DulceriaDTO dulceriaDTO) {
         Dulceria existingDulceria = dulceriaRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Producto no encontrado con ID: " + id));
 
-        modelMapper.map(dulceriaDTO, existingDulceria); // Actualiza campos automáticamente
+        modelMapper.map(dulceriaDTO, existingDulceria); 
         Dulceria updatedDulceria = dulceriaRepository.save(existingDulceria);
         return modelMapper.map(updatedDulceria, DulceriaResponseDTO.class);
     }
 
-    // Eliminar
+
     public void deleteDulceria(Long id) {
         if (!dulceriaRepository.existsById(id)) {
             throw new ResourceNotFoundException("Producto no encontrado con ID: " + id);

@@ -43,7 +43,7 @@ public class CinermaApplication {
             cine1.setUrlImage("https://cdnpe.cineplanet.com.pe/assets/77a68319-ab16-4888-b287-7a8235d6fb52");
             cine1.setHorarios(Arrays.asList("5:00 pm", "8:30 pm"));
             cine1.setDisponible(Arrays.asList("2D", "REGULAR"));
-            cine1.setCities(lima);
+            cine1.setCity(lima);
 
             Cinemas cine2 = new Cinemas();
             cine2.setName("CP Arequipa Mall Plaza");
@@ -52,7 +52,7 @@ public class CinermaApplication {
             cine2.setUrlImage("https://cdnpe.cineplanet.com.pe/assets/92264a76-78f6-44ad-b1c4-291a0f9d87dd");
             cine2.setHorarios(Arrays.asList("4:00 pm", "7:30 pm"));
             cine2.setDisponible(Arrays.asList("3D", "PRIME"));
-            cine2.setCities(lima);
+            cine2.setCity(lima);
 
             cinemasRepository.saveAll(Arrays.asList(cine1, cine2));
 

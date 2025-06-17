@@ -3,6 +3,7 @@ package com.devDJ.cinerma.Entities;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -41,6 +42,6 @@ public class Movie {
 
     // Relación con Schedule (sin cambios)
     @OneToMany(mappedBy = "movie")
-    @JsonBackReference
+    @JsonManagedReference("movie-schedule")
     private List<Schedule> schedules;
 }

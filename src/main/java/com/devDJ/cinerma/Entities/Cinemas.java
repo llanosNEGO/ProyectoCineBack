@@ -40,11 +40,11 @@ public class Cinemas {
     @ManyToOne
     @JoinColumn(name = "city_id")
     @JsonBackReference
-    private Cities cities;
+    private Cities city;
 
     // Relación con Salas (1 cine tiene muchas salas)
     @OneToMany(mappedBy = "cinema", cascade = CascadeType.ALL)
     @JsonManagedReference
-    private List<Rooms> rooms; // Antes "sala" en el JSON
+    private List<Rooms> rooms;
 
 }

@@ -6,11 +6,9 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToMany;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -26,15 +24,12 @@ import lombok.Setter;
 public class Cities {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long idCities;
-    private String nameCity;
-    
-    /*********************************Relaciones con otras tablas**********************/
-    @OneToMany(mappedBy = "city", cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonManagedReference
-    private List<Cinemas> cines;
+    private Long id;
 
-    public Cities(String nameCity) {
-        this.nameCity = nameCity;
-    }
+    private String name; // Ej: "Lima"
+
+    // Relación con Cines (1 ciudad tiene muchos cines)
+    @OneToMany(mappedBy = "city", cascade = CascadeType.ALL)
+    @JsonManagedReference
+    private List<Cinemas> cinemas;
 }

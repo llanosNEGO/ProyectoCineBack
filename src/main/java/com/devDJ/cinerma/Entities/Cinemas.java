@@ -26,34 +26,25 @@ import lombok.Setter;
 @Entity
 public class Cinemas {
     @Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
-    private Long idCinemas;
-    @Column
-    private String nameCinema;
-    @Column
-    private String description;
-    @Column
-    private String address;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
 
-    //Contructor personalizado para llenar los datos cine
-    public Cinemas(String nameCinema, String description, String address, Cities city) {
-        this.nameCinema = nameCinema;
-        this.description = description;
-        this.address = address;
-        this.city = city;
-    }
+    private String name;          // Ej: "CP Alcazar"
+    private String description;   // "descripcion 1"
+    private String address;       // "Av. Santa Cruz 814-816"
+    private String urlImage;      // URL del logo del cine
+    private List<String> horarios; // ["5:00 pm", "8:30 pm"]
+    private List<String> disponible; // ["2D", "REGULAR"]
 
-
-    /********************************Relaciones con otras tablas****************************** */
-    //muchos cines estan relacionados con una ciudad
+    // Relación con Ciudad (1 cine pertenece a 1 ciudad)
     @ManyToOne
     @JoinColumn(name = "city_id")
     @JsonBackReference
-    private Cities city;
+    private Cities cities;
 
-    //Un cine Tine muchas salas y una sala pertenece a un cine
-    @OneToMany(mappedBy = "cine", cascade = CascadeType.ALL, orphanRemoval = true)
+    // Relación con Salas (1 cine tiene muchas salas)
+    @OneToMany(mappedBy = "cinema", cascade = CascadeType.ALL)
     @JsonManagedReference
-    private List<Rooms> rooms;
+    private List<Rooms> rooms; // Antes "sala" en el JSON
 
 }

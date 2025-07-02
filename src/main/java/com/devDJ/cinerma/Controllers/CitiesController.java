@@ -3,6 +3,7 @@ package com.devDJ.cinerma.Controllers;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 import com.devDJ.cinerma.Entities.Cities;
@@ -27,11 +28,13 @@ public class CitiesController {
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Ciudad no encontrada"));
     }
 
+    @PreAuthorize("hasAuthority('ADMIN')")
     @PostMapping
     public Cities createCity(@RequestBody Cities cities) {
         return cityRepository.save(cities);
     }
 
+    @PreAuthorize("hasAuthority('ADMIN')")
     @PutMapping("/{id}")
     public Cities updateCity(@PathVariable Long id, @RequestBody Cities updatedCity) {
         return cityRepository.findById(id)
@@ -42,6 +45,7 @@ public class CitiesController {
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Ciudad no encontrada"));
     }
 
+    @PreAuthorize("hasAuthority('ADMIN')")
     @DeleteMapping("/{id}")
     public void deleteCity(@PathVariable Long id) {
         cityRepository.deleteById(id);

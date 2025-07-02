@@ -4,6 +4,7 @@ import com.devDJ.cinerma.dtos.DulceriaDTO;
 import com.devDJ.cinerma.dtos.DulceriaResponseDTO;
 import com.devDJ.cinerma.services.DulceriaService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
@@ -28,12 +29,14 @@ public class DulceriaController {
     }
 
     // POST: Crear producto (usa DTO de entrada)
+    @PreAuthorize("hasAuthority('ADMIN')")
     @PostMapping
     public DulceriaResponseDTO createDulceria(@RequestBody DulceriaDTO dulceriaDTO) {
         return dulceriaService.createDulceria(dulceriaDTO);
     }
 
     // PUT: Actualizar producto (totalmente con DTOs)
+    @PreAuthorize("hasAuthority('ADMIN')")
     @PutMapping("/{id}")
     public DulceriaResponseDTO updateDulceria(
             @PathVariable Long id,
@@ -42,6 +45,7 @@ public class DulceriaController {
     }
 
     // DELETE: Eliminar producto
+    @PreAuthorize("hasAuthority('ADMIN')")
     @DeleteMapping("/{id}")
     public void deleteDulceria(@PathVariable Long id) {
         dulceriaService.deleteDulceria(id);

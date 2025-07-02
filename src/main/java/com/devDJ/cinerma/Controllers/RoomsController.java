@@ -3,6 +3,7 @@ package com.devDJ.cinerma.Controllers;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -33,11 +34,13 @@ public class RoomsController {
         return roomsRepository.findById(id).orElse(null);
     }
 
+    @PreAuthorize("hasAuthority('ADMIN')")
     @PostMapping("/sala")
     public Rooms insertRoom(@RequestBody Rooms room) {
         return roomsRepository.save(room);
     }
 
+    @PreAuthorize("hasAuthority('ADMIN')")
     @DeleteMapping("/sala/{id}")
     public void deleteRoom(Long id) {
         roomsRepository.deleteById(id);

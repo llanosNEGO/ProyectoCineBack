@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -33,12 +34,14 @@ public class MovieController {
     }
 
     // Crear película (ACTUALIZADO para nuevos campos)
+    @PreAuthorize("hasAuthority('ADMIN')")
     @PostMapping("/pelicula")
     public Movie createMovie(@RequestBody Movie movie) {
         return movieRepository.save(movie);
     }
 
     // Actualizar película (AJUSTADO para nuevos campos)
+    @PreAuthorize("hasAuthority('ADMIN')")
     @PutMapping("/pelicula/{id}")
     public Movie updateMovie(@PathVariable Long id, @RequestBody Movie updatedMovie) {
         return movieRepository.findById(id)
@@ -60,6 +63,7 @@ public class MovieController {
     }
 
     // Eliminar película (CORRECTO)
+    @PreAuthorize("hasAuthority('ADMIN')")
     @DeleteMapping("/pelicula/{id}")
     public void deleteMovie(@PathVariable Long id) {
         movieRepository.deleteById(id);

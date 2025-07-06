@@ -1,16 +1,10 @@
 package com.devDJ.cinerma.Controllers;
 
-import java.util.List;
-import java.util.Optional;
-
+import com.devDJ.cinerma.dtos.*;
+import com.devDJ.cinerma.services.MovieService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.server.ResponseStatusException;
-
-import com.devDJ.cinerma.Entities.Movie;
-import com.devDJ.cinerma.Repository.IMovieRepository;
+import java.util.List;
 
 @CrossOrigin
 @RestController
@@ -18,54 +12,32 @@ import com.devDJ.cinerma.Repository.IMovieRepository;
 public class MovieController {
 
     @Autowired
-    private IMovieRepository movieRepository;
+    private MovieService movieService;
 
-    // Obtener todas las películas (CORRECTO)
-    @GetMapping("/pelicula")
-    public List<Movie> getAllMovies() {
-        return movieRepository.findAll();
+    @PostMapping
+    public MovieResponseDTO createMovie(@RequestBody MovieDTO movieDTO) {
+        return movieService.createMovie(movieDTO);
     }
 
-    // Obtener película por ID (CORRECTO)
-    @GetMapping("/pelicula/{id}")
-    public Movie getMovieById(@PathVariable Long id) {
-        return movieRepository.findById(id)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Película no encontrada"));
+    @GetMapping
+    public List<MovieResponseDTO> getAllMovies() {
+        return movieService.getAllMovies();
     }
 
-    // Crear película (ACTUALIZADO para nuevos campos)
-    @PreAuthorize("hasAuthority('ADMIN')")
-    @PostMapping("/pelicula")
-    public Movie createMovie(@RequestBody Movie movie) {
-        return movieRepository.save(movie);
+    @GetMapping("/{id}")
+    public MovieResponseDTO getMovieById(@PathVariable Long id) {
+        return movieService.getMovieById(id);
     }
 
-    // Actualizar película (AJUSTADO para nuevos campos)
-    @PreAuthorize("hasAuthority('ADMIN')")
-    @PutMapping("/pelicula/{id}")
-    public Movie updateMovie(@PathVariable Long id, @RequestBody Movie updatedMovie) {
-        return movieRepository.findById(id)
-                .map(existingMovie -> {
-                    existingMovie.setTitle(updatedMovie.getTitle());
-                    existingMovie.setUrl(updatedMovie.getUrl());
-                    existingMovie.setSinopsis(updatedMovie.getSinopsis());
-                    existingMovie.setGenre(updatedMovie.getGenre());
-                    existingMovie.setDirector(updatedMovie.getDirector());
-                    existingMovie.setDurationMovie(updatedMovie.getDurationMovie());
-                    existingMovie.setAge(updatedMovie.getAge());
-                    existingMovie.setUrlTrailer(updatedMovie.getUrlTrailer());
-                    existingMovie.setIdioma(updatedMovie.getIdioma());
-                    existingMovie.setStatus(updatedMovie.getStatus());
-                    existingMovie.setDisponible(updatedMovie.getDisponible());
-                    return movieRepository.save(existingMovie);
-                })
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Película no encontrada"));
+    @PutMapping("/{id}")
+    public MovieResponseDTO updateMovie(
+            @PathVariable Long id,
+            @RequestBody MovieDTO movieDTO) {
+        return movieService.updateMovie(id, movieDTO);
     }
 
-    // Eliminar película (CORRECTO)
-    @PreAuthorize("hasAuthority('ADMIN')")
-    @DeleteMapping("/pelicula/{id}")
+    @DeleteMapping("/{id}")
     public void deleteMovie(@PathVariable Long id) {
-        movieRepository.deleteById(id);
+        movieService.deleteMovie(id);
     }
 }

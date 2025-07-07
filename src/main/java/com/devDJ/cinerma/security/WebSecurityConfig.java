@@ -54,7 +54,11 @@ public class WebSecurityConfig {
                 .authorizeHttpRequests(req -> req
                         .requestMatchers(antMatcher("/login")).permitAll()
                         .requestMatchers(HttpMethod.GET,"/v1/movies/pelicula").permitAll()//excluye a estas direcciones del TOKEN
-                        .requestMatchers(HttpMethod.GET,"/v1/movies/pelicula/**").permitAll()//excluye a estas direcciones del TOKEN
+                        .requestMatchers(HttpMethod.GET,"/v1/movies/pelicula/**").permitAll()
+                        .requestMatchers(HttpMethod.GET,"/v1/dulceria").permitAll()
+                        .requestMatchers(HttpMethod.GET,"/v1/dulceria/**").permitAll()//excluye a estas direcciones del TOKEN
+                        .requestMatchers(HttpMethod.GET,"/v1/cinemas").permitAll()
+                        .requestMatchers(HttpMethod.GET,"/v1/cinemas/**").permitAll()
                         //.requestMatchers(antMatcher("/mail/**")).permitAll()
                         //.requestMatchers(antMatcher("/medics/**")).authenticated()
                         .anyRequest().authenticated()

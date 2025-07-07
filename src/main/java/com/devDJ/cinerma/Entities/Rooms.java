@@ -26,7 +26,7 @@ import lombok.Setter;
 @Entity
 public class Rooms {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idRooms;
     private String name;
     private Long numRows;

@@ -5,4 +5,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface IUserRepository extends IGenericRepo<User, Integer> {
     User findOneByUsername(String username);
+
+    boolean existsByEmail(String email);
 }

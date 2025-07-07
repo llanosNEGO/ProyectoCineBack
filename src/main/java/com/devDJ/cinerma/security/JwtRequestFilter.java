@@ -20,7 +20,15 @@ import java.io.IOException;
 public class JwtRequestFilter extends OncePerRequestFilter {
     private final JwtTokenUtil jwtTokenUtil;
     private final JwtUserDetailsService jwtUserDetailsService;
-
+    @Override
+    protected boolean shouldNotFilter(HttpServletRequest request) throws ServletException {
+        String path = request.getRequestURI();
+        // Lista de rutas públicas que NO deben pasar por el filtro JWT
+        return path.startsWith("/v1/movies/")
+                || path.startsWith("/v1/dulceria/")
+                || path.startsWith("/v1/cinemas/")
+                || path.equals("/login");
+    }
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         final String header = request.getHeader("Authorization");

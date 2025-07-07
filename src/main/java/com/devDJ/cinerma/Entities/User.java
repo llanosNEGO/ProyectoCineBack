@@ -16,8 +16,8 @@ import java.util.List;
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class User {
     @Id
-    @EqualsAndHashCode.Include
-    private Integer idUser;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id_user;
 
     @Column(nullable = false, length = 20)
     private String username;
@@ -28,7 +28,7 @@ public class User {
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "user_role" ,
-        joinColumns = @JoinColumn(name = "id_User", referencedColumnName = "idUser"),
+        joinColumns = @JoinColumn(name = "id_User", referencedColumnName = "id_user"),
             inverseJoinColumns = @JoinColumn(name = "id_role", referencedColumnName = "idRol")
     )
     private List<Roles> roles;
